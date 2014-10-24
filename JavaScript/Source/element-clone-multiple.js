@@ -12,7 +12,9 @@
  * 
  * @returns {DocumentFragment}   Fragment containing all cloned elements
  */
-(HTMLElement || Element).prototype.cloneMultiple = function ( n, bool_deep ) {
+(
+   window.HTMLElement || window.Element || Object
+).prototype.cloneMultiple = function ( n, bool_deep ) {
    var fragment = document.createDocumentFragment();
    fragment.appendChild( this.cloneNode( bool_deep ) );
    
