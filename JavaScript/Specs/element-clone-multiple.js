@@ -40,14 +40,20 @@ describe('HTMLElement.cloneMultiple', function () {
    it('Is faster than `cloneNode` for large amount of DOM nodes', function () {
       var clones_num = 20000;
       
+      var container = document.body.appendChild( document.createElement('div') );
+      
       timer.start('cloneNode');
       for ( var i=0; i<clones_num; i += 1 ) {
-         document.body.appendChild( element.cloneNode( true ) );
+         container.appendChild( element.cloneNode( true ) );
       }
       var time_clone_node = timer.end('cloneNode');
       
+      // free some memory
+      document.body.removeChild( container );
+      container = document.body.appendChild( document.createElement('div') );
+      
       timer.start('cloneMultiple');
-      document.body.appendChild( element.cloneMultiple( clones_num, true ) );
+      container.appendChild( element.cloneMultiple( clones_num, true ) );
       var time_clone_multiple = timer.end('cloneMultiple');
       
       expect( time_clone_multiple < time_clone_node ).toBeTruthy();
